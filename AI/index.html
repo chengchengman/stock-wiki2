@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台股科技產業與關鍵零組件知識庫 (Stock Wiki)</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Marked.js 用來渲染 Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed">
+
+    <!-- 導覽列 -->
+    <header class="bg-slate-900 text-white shadow-md">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold tracking-wider">📈 Stock & Tech Wiki</h1>
+            <span class="text-xs bg-emerald-600 px-3 py-1 rounded-full font-medium">LLM Wiki 架構</span>
+        </div>
+    </header>
+
+    <!-- 主要內容區 -->
+    <main class="max-w-5xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        <!-- 側邊欄導覽 -->
+        <aside class="md:col-span-1 bg-white p-4 rounded-xl shadow-sm border border-gray-100 h-fit">
+            <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">知識庫分類</h3>
+            <ul class="space-y-2 text-sm">
+                <li>
+                    <a href="#" onclick="loadMarkdown('content/wiki/materials/fiberglass.md')" class="block px-3 py-2 rounded-lg bg-emerald-50 text-emerald-700 font-medium hover:bg-emerald-100 transition">
+                        🧪 電子級玻纖布 (台玻、南亞)
+                    </a>
+                </li>
+                <!-- 之後可以依據 AGENTS.md 規則繼續擴充新頁面 -->
+            </ul>
+        </aside>
+
+        <!-- 文章顯示區 -->
+        <section class="md:col-span-3 bg-white p-8 rounded-xl shadow-sm border border-gray-100 min-h-[500px]">
+            <div id="content-container" class="prose max-w-none">
+                <!-- 預設載入首頁歡迎詞 -->
+                <h2 class="text-2xl font-bold text-slate-900 mb-4">歡迎來到台股產業知識庫</h2>
+                <p class="text-gray-600 mb-4">
+                    本專案採用 <strong>LLM Wiki</strong> 概念建立。你可以透過左側選單點擊不同的科技產業與關鍵零組件模組，深入了解台股供應鏈定位。
+                </p>
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-4 text-amber-800 text-sm rounded-r-lg">
+                    💡 <strong>提示：</strong>本專案已設定好 <code>AGENTS.md</code> 規則。未來若要新增公司或零組件介紹，只需按照規範新增 Markdown 檔案並更新索引，AI 就能輕鬆幫你擴充！
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 頁尾 -->
+    <footer class="text-center py-6 text-xs text-gray-400 border-t mt-12">
+        &copy; 2026 Stock & Tech Wiki. Powered by GitHub Pages & AGENTS.md workflow.
+    </footer>
+
+    <!-- 簡單的 Markdown 載入腳本 -->
+    <script>
+        async function loadMarkdown(path) {
+            try {
+                const response = await fetch(path);
+                if (!response.ok) throw new Error('找不到頁面');
+                const markdownText = await response.text();
+                document.getElementById('content-container').innerHTML = marked.parse(markdownText);
+            } catch (error) {
+                document.getElementById('content-container').innerHTML = `<p class="text-red-500">載入失敗：${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
